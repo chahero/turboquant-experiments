@@ -18,7 +18,8 @@
       "Bash(timeout 1800 python validate.py --model Qwen/Qwen2.5-3B-Instruct)",
       "Bash(timeout 1800 python validate.py --model microsoft/phi-2)",
       "Bash(timeout 1800 python validate.py --model meta-llama/Llama-2-7b-hf)",
-      "Bash(timeout 1800 python validate.py --model mistralai/Mistral-7B-Instruct-v0.1)"
+      "Bash(timeout 1800 python validate.py --model mistralai/Mistral-7B-Instruct-v0.1)",
+      "Bash(python generate_charts.py)"
     ]
   }
 }

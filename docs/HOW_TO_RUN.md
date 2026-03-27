@@ -23,7 +23,7 @@ pip install -r original_implementation/requirements.txt
 pip install transformers bitsandbytes accelerate
 
 # For CUDA support
-pip install torch --index-url https://download.pytorch.org/whl/cu118
+pip install torch --index-url https://download.pytorch.org/whl/cu126
 ```
 
 ## Running Synthetic Tests

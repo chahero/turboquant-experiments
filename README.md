@@ -10,26 +10,47 @@ This repository extends the [original implementation](https://github.com/tonbist
 
 ## Quick Start
 
-```bash
-# Install dependencies
-pip install torch transformers bitsandbytes accelerate scipy
+### Installation
 
+```bash
+pip install torch transformers bitsandbytes accelerate scipy sentencepiece tiktoken protobuf
+```
+
+### Linux/Mac
+
+```bash
 # Run synthetic tests (no GPU needed)
 cd experiments/1_paper_reproduction
 python ../../original_implementation/test_turboquant.py
 
 # Evaluate on a model (GPU required)
 cd experiments/2_multi_model_evaluation
-python evaluate_model.py --model Qwen/Qwen2.5-3B-Instruct --bits 3
+./run_all_models_complete.sh
 ```
 
-## Key Results
+### Windows (PowerShell/CMD)
+
+```bash
+# Navigate to experiments
+cd experiments/2_multi_model_evaluation
+
+# Run all models at once
+.\run_all_models_complete.bat
+
+# Or run individual models
+.\run_qwen.bat          # Qwen2.5-3B-Instruct
+```
+
+## Key Results (3-bit Quantization @ 8K Context)
 
 | Model | Compression | Cosine Sim | Top-1 % | Top-5 % |
 |-------|-------------|-----------|---------|---------|
-| Qwen 3B (3-bit) | 5.0x | 0.9945 | 86% | 94% |
-| Qwen 3B (4-bit) | 3.8x | 0.9983 | 92% | 96% |
-| (More models evaluated in `RESULTS.md`) | ... | ... | ... | ... |
+| **Qwen2.5-3B** | 5.0x | **0.9945** | 86.1% | 94.4% |
+| **Mistral-7B** | 5.0x | 0.9887 | **97.7%** | 100.0% |
+| **Phi-2** | 4.8x | 0.9924 | 28.2% | 55.7% |
+
+**Best Overall: Mistral-7B** (highest top-1 match across all contexts)
+**Highest Cosine Similarity: Qwen2.5-3B** (most similar attention distributions)
 
 **Interpretation**:
 - **5.0x compression**: KV cache shrinks from 290 MB to 58 MB (8K context)
@@ -89,9 +110,9 @@ turboquant-experiments/
 ### Models Tested
 
 - **Qwen2.5-3B-Instruct** (3.5GB) - ✅ Primary baseline
-- **Microsoft Phi-2** (2.7GB) - Small, GPU-efficient
-- **Meta LLaMA-2-7B** (13GB) - Popular baseline
-- **Mistral-7B-Instruct** (13GB) - Modern architecture
+- **Microsoft Phi-2** (2.7GB) - ✅ Small, GPU-efficient
+- **Mistral-7B-Instruct-v0.1** (13GB) - ✅ Best overall performance
+- **Meta LLaMA-2-7B** (13GB) - ❌ Requires HuggingFace authentication (gated repo)
 
 ### Metrics
 
@@ -113,28 +134,52 @@ Verify core algorithm correctness:
 ```bash
 cd experiments/1_paper_reproduction
 python ../../original_implementation/test_turboquant.py
-
-# Output: Verify MSE bounds, inner product unbiasedness, needle-in-haystack
 ```
 
 ### 2. Model Evaluation (GPU Required)
 
-Evaluate on different models:
+#### Linux/Mac
+```bash
+cd experiments/2_multi_model_evaluation
+./run_all_models_complete.sh
+```
+
+#### Windows (PowerShell/CMD)
+```bash
+cd experiments/2_multi_model_evaluation
+.\run_all_models_complete.bat
+```
+
+**Results are automatically saved to:** `experiments/2_multi_model_evaluation/results/` with JSON files per model.
+
+#### Individual Model Evaluation
+
+**Using validate.py (proven stable):**
+```bash
+cd original_implementation
+python validate.py --model Qwen/Qwen2.5-3B-Instruct
+python validate.py --model microsoft/phi-2
+python validate.py --model mistralai/Mistral-7B-Instruct-v0.1
+```
+
+**Or directly:**
+```bash
+cd experiments/2_multi_model_evaluation
+python evaluate_model.py --model Qwen/Qwen2.5-3B-Instruct --bits 3
+```
+
+### 3. Generate Visualization Charts
+
+Create charts from experimental results:
 
 ```bash
 cd experiments/2_multi_model_evaluation
-
-# Single model, single bit-width
-python evaluate_model.py --model Qwen/Qwen2.5-3B-Instruct --bits 3
-
-# All models, all bit-widths (requires significant GPU time)
-bash run_all_models.sh
-
-# Analyze results
-python analyze_results.py --dir .
+python generate_charts.py
 ```
 
-### 3. Performance Benchmarking
+**Charts saved to:** `docs/charts/`
+
+### 4. Performance Benchmarking
 
 Measure speed and memory:
 
@@ -143,29 +188,62 @@ cd experiments/3_performance_analysis
 python benchmark_speed.py
 ```
 
-## Results Summary
+## Results Summary (Comprehensive Evaluation)
+
+### Visualization Charts
+
+All experimental results are visualized for easy interpretation. View the generated charts:
+
+- **Compression Comparison** - [01_compression_comparison.png](docs/charts/01_compression_comparison.png)
+- **Cosine Similarity by Context** - [02_cosine_similarity_context.png](docs/charts/02_cosine_similarity_context.png)
+- **Top-1 Accuracy Comparison** - [03_top1_accuracy.png](docs/charts/03_top1_accuracy.png)
+- **Context Sensitivity Heatmap** - [04_context_sensitivity_heatmap.png](docs/charts/04_context_sensitivity_heatmap.png)
+- **Model Comparison Radar** - [05_model_comparison_radar.png](docs/charts/05_model_comparison_radar.png)
+- **Compression-Accuracy Tradeoff** - [06_compression_accuracy_tradeoff.png](docs/charts/06_compression_accuracy_tradeoff.png)
+
+**For detailed analysis and additional charts, see [docs/RESULTS.md](docs/RESULTS.md)**
+
+### Overall Performance by Model @ 3-bit
+
+| Metric | Qwen2.5-3B | Phi-2 | Mistral-7B |
+|--------|-----------|-------|-----------|
+| **Compression Ratio** | 5.0x | 4.8x | 5.0x |
+| **Cosine Sim (2K)** | 0.9961 | 0.9918 | 0.9930 |
+| **Top-1 Match (8K)** | 86.1% | 28.2% | **97.7%** |
+| **Top-5 Match (8K)** | 94.4% | 55.7% | **100.0%** |
 
 ### Compression Effectiveness
 
 **At 3-bit quantization**:
-- 5.0x - 5.3x compression across all tested models
+- **5.0x compression** (Qwen, Mistral)
+- **4.8x compression** (Phi-2)
 - Stable across context lengths (2K-8K tokens)
-- Minimal sensitivity to model architecture
 
-### Attention Accuracy
+### Attention Accuracy (Cosine Similarity)
 
-**Cosine Similarity** (primary metric):
-- 3-bit: 0.994 - 0.996 (99.4% - 99.6% similar)
-- 4-bit: 0.998 - 0.999 (99.8% - 99.9% similar)
-- 2-bit: 0.985 - 0.990 (98.5% - 99.0% similar)
+| Quantization | Qwen | Phi-2 | Mistral | Range |
+|--------------|------|-------|---------|-------|
+| 3-bit @ 8K   | 0.9945 | 0.9924 | 0.9887  | 98.9% - 99.5% |
 
-**Interpretation**: Even at 3-bit, attention distributions are 99.5% similar to FP16.
+**Interpretation**: Even at 3-bit, attention distributions are **98.9% - 99.5%** similar to FP16 (original model).
+
+### Context Length Stability
+
+| Model | 2K Tokens | 4K Tokens | 8K Tokens |
+|-------|-----------|-----------|-----------|
+| **Mistral** | 97.3% top-1 | 96.5% top-1 | 97.7% top-1 |
+| **Qwen** | 84.7% top-1 | 72.2% top-1 | 86.1% top-1 |
+| **Phi-2** | 59.7% top-1 | 39.8% top-1 | 28.2% top-1 |
+
+**Finding**: Mistral maintains consistent performance across all context lengths. Phi-2 degrades significantly with longer contexts.
 
 ### Practical Implications
 
 On a 12GB GPU with 3-bit TurboQuant:
 - FP16 baseline: ~8K tokens max context
 - TurboQuant 3-bit: ~40K tokens possible (5x improvement)
+- **Mistral-7B: Best for long-context applications**
+- **Qwen-3B: Best cosine similarity, ideal for similarity-critical tasks**
 
 ## Code Quality & Improvements
 

@@ -1,0 +1,75 @@
+[INFO] Evaluating Qwen/Qwen2.5-3B-Instruct
+Loading model...
+W0327 14:19:55.888000 323008 .venv\Lib\site-packages\torch\utils\flop_counter.py:29] triton not found; flop counting will not work for triton kernels
+Loading weights:   0%|          | 0/434 [00:00<?, ?it/s]Loading weights:   0%|          | 1/434 [00:00<04:52,  1.48it/s]Loading weights:   1%|          | 4/434 [00:00<01:08,  6.26it/s]Loading weights:   3%|3         | 15/434 [00:00<00:16, 25.46it/s]Loading weights:   5%|4         | 21/434 [00:01<00:12, 32.58it/s]Loading weights:   6%|6         | 28/434 [00:01<00:09, 40.87it/s]Loading weights:   9%|8         | 39/434 [00:01<00:07, 55.05it/s]Loading weights:  11%|#         | 46/434 [00:01<00:06, 58.31it/s]Loading weights:  12%|#2        | 53/434 [00:01<00:07, 54.21it/s]Loading weights:  15%|#4        | 64/434 [00:01<00:05, 65.39it/s]Loading weights:  17%|#7        | 75/434 [00:01<00:04, 73.50it/s]Loading weights:  19%|#9        | 83/434 [00:01<00:04, 71.66it/s]Loading weights:  21%|##        | 91/434 [00:01<00:05, 67.05it/s]Loading weights:  23%|##3       | 100/434 [00:02<00:04, 70.10it/s]Loading weights:  26%|##5       | 111/434 [00:02<00:04, 77.15it/s]Loading weights:  27%|##7       | 119/434 [00:02<00:04, 74.97it/s]Loading weights:  29%|##9       | 127/434 [00:02<00:04, 69.89it/s]Loading weights:  31%|###1      | 136/434 [00:02<00:04, 72.27it/s]Loading weights:  34%|###3      | 147/434 [00:02<00:03, 79.18it/s]Loading weights:  36%|###5      | 156/434 [00:02<00:03, 80.05it/s]Loading weights:  38%|###8      | 165/434 [00:02<00:03, 73.09it/s]Loading weights:  40%|###9      | 173/434 [00:03<00:03, 67.24it/s]Loading weights:  42%|####2     | 184/434 [00:03<00:03, 73.70it/s]Loading weights:  45%|####4     | 195/434 [00:03<00:02, 79.78it/s]Loading weights:  47%|####7     | 204/434 [00:03<00:02, 79.19it/s]Loading weights:  49%|####9     | 213/434 [00:03<00:03, 73.06it/s]Loading weights:  51%|#####     | 221/434 [00:03<00:03, 67.36it/s]Loading weights:  53%|#####3    | 232/434 [00:03<00:02, 75.56it/s]Loading weights:  56%|#####5    | 243/434 [00:03<00:02, 81.61it/s]Loading weights:  58%|#####8    | 252/434 [00:04<00:02, 81.42it/s]Loading weights:  60%|######    | 261/434 [00:04<00:02, 74.55it/s]Loading weights:  62%|######1   | 269/434 [00:04<00:02, 68.66it/s]Loading weights:  65%|######4   | 280/434 [00:04<00:02, 76.22it/s]Loading weights:  67%|######7   | 291/434 [00:04<00:01, 81.92it/s]Loading weights:  69%|######9   | 300/434 [00:04<00:01, 82.03it/s]Loading weights:  71%|#######1  | 309/434 [00:04<00:01, 75.39it/s]Loading weights:  73%|#######3  | 317/434 [00:04<00:01, 69.01it/s]Loading weights:  76%|#######5  | 328/434 [00:05<00:01, 76.64it/s]Loading weights:  78%|#######8  | 339/434 [00:05<00:01, 82.53it/s]Loading weights:  80%|########  | 348/434 [00:05<00:01, 81.78it/s]Loading weights:  82%|########2 | 357/434 [00:05<00:01, 74.84it/s]Loading weights:  84%|########4 | 365/434 [00:05<00:01, 68.33it/s]Loading weights:  87%|########6 | 376/434 [00:05<00:00, 75.46it/s]Loading weights:  89%|########9 | 387/434 [00:05<00:00, 76.93it/s]Loading weights:  91%|#########1| 395/434 [00:05<00:00, 75.04it/s]Loading weights:  93%|#########2| 403/434 [00:06<00:00, 70.06it/s]Loading weights:  95%|#########4| 412/434 [00:06<00:00, 72.02it/s]Loading weights:  97%|#########7| 423/434 [00:06<00:00, 78.94it/s]Loading weights:  99%|#########9| 431/434 [00:06<00:00, 76.43it/s]Loading weights: 100%|##########| 434/434 [00:06<00:00, 67.06it/s]
+Loaded. GPU: 2094 MB
+
+======================================================================
+Context: 2065 tokens | Needle at token None
+======================================================================
+
+  TQ-2bit:
+    Compression:       7.3x  (9.9 MB vs 72.6 MB)
+    Score cosine sim:  0.989685  (1.0 = perfect)
+    Top-1 match:       63.9%  (46/72 heads)
+    Top-5 match:       83.3%  (60/72 heads)
+
+  TQ-3bit:
+    Compression:       5.0x  (14.5 MB vs 72.6 MB)
+    Score cosine sim:  0.996054  (1.0 = perfect)
+    Top-1 match:       84.7%  (61/72 heads)
+    Top-5 match:       94.4%  (68/72 heads)
+
+  TQ-4bit:
+    Compression:       3.8x  (19.0 MB vs 72.6 MB)
+    Score cosine sim:  0.998767  (1.0 = perfect)
+    Top-1 match:       83.3%  (60/72 heads)
+    Top-5 match:       95.8%  (69/72 heads)
+
+======================================================================
+Context: 4090 tokens | Needle at token None
+======================================================================
+
+  TQ-2bit:
+    Compression:       7.3x  (19.7 MB vs 143.8 MB)
+    Score cosine sim:  0.987765  (1.0 = perfect)
+    Top-1 match:       65.3%  (47/72 heads)
+    Top-5 match:       83.3%  (60/72 heads)
+
+  TQ-3bit:
+    Compression:       5.0x  (28.6 MB vs 143.8 MB)
+    Score cosine sim:  0.995525  (1.0 = perfect)
+    Top-1 match:       72.2%  (52/72 heads)
+    Top-5 match:       88.9%  (64/72 heads)
+
+  TQ-4bit:
+    Compression:       3.8x  (37.6 MB vs 143.8 MB)
+    Score cosine sim:  0.998603  (1.0 = perfect)
+    Top-1 match:       91.7%  (66/72 heads)
+    Top-5 match:       94.4%  (68/72 heads)
+
+======================================================================
+Context: 8221 tokens | Needle at token None
+======================================================================
+
+  TQ-2bit:
+    Compression:       7.3x  (39.5 MB vs 289.0 MB)
+    Score cosine sim:  0.985059  (1.0 = perfect)
+    Top-1 match:       70.8%  (51/72 heads)
+    Top-5 match:       87.5%  (63/72 heads)
+
+  TQ-3bit:
+    Compression:       5.0x  (57.6 MB vs 289.0 MB)
+    Score cosine sim:  0.994469  (1.0 = perfect)
+    Top-1 match:       86.1%  (62/72 heads)
+    Top-5 match:       94.4%  (68/72 heads)
+
+  TQ-4bit:
+    Compression:       3.8x  (75.6 MB vs 289.0 MB)
+    Score cosine sim:  0.998286  (1.0 = perfect)
+    Top-1 match:       87.5%  (63/72 heads)
+    Top-5 match:       95.8%  (69/72 heads)
+
+======================================================================
+DONE
+======================================================================
