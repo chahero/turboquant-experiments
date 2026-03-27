@@ -1,5 +1,7 @@
 # TurboQuant: KV Cache Compression Experiments
 
+**Languages**: [English](#turboquant-kv-cache-compression-experiments) | [한국어](README_KO.md)
+
 Comprehensive evaluation of **TurboQuant**, a near-optimal vector quantization algorithm for compressing LLM key-value caches.
 
 This repository extends the [original implementation](https://github.com/tonbistudio/turboquant-pytorch) with:
@@ -192,16 +194,27 @@ python benchmark_speed.py
 
 ### Visualization Charts
 
-All experimental results are visualized for easy interpretation. View the generated charts:
+All experimental results are visualized for easy interpretation:
 
-- **Compression Comparison** - [01_compression_comparison.png](docs/charts/01_compression_comparison.png)
-- **Cosine Similarity by Context** - [02_cosine_similarity_context.png](docs/charts/02_cosine_similarity_context.png)
-- **Top-1 Accuracy Comparison** - [03_top1_accuracy.png](docs/charts/03_top1_accuracy.png)
-- **Context Sensitivity Heatmap** - [04_context_sensitivity_heatmap.png](docs/charts/04_context_sensitivity_heatmap.png)
-- **Model Comparison Radar** - [05_model_comparison_radar.png](docs/charts/05_model_comparison_radar.png)
-- **Compression-Accuracy Tradeoff** - [06_compression_accuracy_tradeoff.png](docs/charts/06_compression_accuracy_tradeoff.png)
+#### Compression Comparison (8K Context)
+![Compression Comparison](docs/charts/01_compression_comparison.png)
 
-**For detailed analysis and additional charts, see [docs/RESULTS.md](docs/RESULTS.md)**
+#### Cosine Similarity Across Context Lengths
+![Cosine Similarity by Context](docs/charts/02_cosine_similarity_context.png)
+
+#### Top-1 Match Accuracy (3-bit @ 8K)
+![Top-1 Accuracy](docs/charts/03_top1_accuracy.png)
+
+#### Context Sensitivity Analysis
+![Context Sensitivity Heatmap](docs/charts/04_context_sensitivity_heatmap.png)
+
+#### Model Comparison (3-bit @ 8K)
+![Model Radar Chart](docs/charts/05_model_comparison_radar.png)
+
+#### Compression-Accuracy Tradeoff
+![Compression-Accuracy Tradeoff](docs/charts/06_compression_accuracy_tradeoff.png)
+
+**For detailed analysis and additional charts, see [docs/RESULTS.md](docs/RESULTS.md) and [docs/charts/README.md](docs/charts/README.md)**
 
 ### Overall Performance by Model @ 3-bit
 

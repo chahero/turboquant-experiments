@@ -1,5 +1,7 @@
 # TurboQuant: KV 캐시 압축 실험
 
+**언어**: [English](README.md) | [한국어](#turboquant-kv-캐시-압축-실험)
+
 **TurboQuant**는 LLM의 키-값 캐시를 압축하는 거의 최적의 벡터 양자화 알고리즘에 대한 포괄적인 평가입니다.
 
 이 리포지토리는 [원본 구현](https://github.com/tonbistudio/turboquant-pytorch)을 다음과 같이 확장합니다:
@@ -139,7 +141,18 @@ python validate.py --model microsoft/phi-2
 python validate.py --model mistralai/Mistral-7B-Instruct-v0.1
 ```
 
-### 3. 종합 테스트 (GPU 필수 없음)
+### 3. 차트 생성
+
+실험 결과로부터 시각화 차트를 생성합니다:
+
+```bash
+cd experiments/2_multi_model_evaluation
+python generate_charts.py
+```
+
+**차트 저장 위치**: `docs/charts/`
+
+### 4. 종합 테스트 (GPU 필수 없음)
 
 ```bash
 cd experiments/1_paper_reproduction
@@ -147,6 +160,30 @@ python ../../original_implementation/test_turboquant.py
 ```
 
 ## 결과 요약
+
+### 시각화 차트
+
+모든 실험 결과를 차트로 시각화했습니다:
+
+#### 압축률 비교 (8K 컨텍스트)
+![Compression Comparison](docs/charts/01_compression_comparison.png)
+
+#### 컨텍스트 길이별 Cosine 유사도
+![Cosine Similarity by Context](docs/charts/02_cosine_similarity_context.png)
+
+#### Top-1 일치율 비교 (3-bit @ 8K)
+![Top-1 Accuracy](docs/charts/03_top1_accuracy.png)
+
+#### 컨텍스트 민감도 분석
+![Context Sensitivity Heatmap](docs/charts/04_context_sensitivity_heatmap.png)
+
+#### 모델 비교 (3-bit @ 8K)
+![Model Radar Chart](docs/charts/05_model_comparison_radar.png)
+
+#### 압축-정확도 트레이드오프
+![Compression-Accuracy Tradeoff](docs/charts/06_compression_accuracy_tradeoff.png)
+
+**자세한 분석과 추가 차트는 [docs/RESULTS.md](docs/RESULTS.md)와 [docs/charts/README.md](docs/charts/README.md)를 참조하세요**
 
 ### 모델별 전체 성능 (3-bit)
 
