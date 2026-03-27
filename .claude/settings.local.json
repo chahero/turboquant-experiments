@@ -1,0 +1,24 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:arxiv.org)",
+      "WebFetch(domain:github.com)",
+      "Bash(mkdir:*)",
+      "Bash(curl -L -o turboquant_paper.pdf https://arxiv.org/pdf/2504.19874v1)",
+      "Bash(cp reference/turboquant-pytorch/*.py original_implementation/)",
+      "Bash(cp reference/turboquant-pytorch/README.md original_implementation/README_ORIGINAL.md)",
+      "Bash(cp reference/turboquant-pytorch/requirements.txt original_implementation/)",
+      "Bash(grep -E \"\\\\.\\(sh|bat\\)$\")",
+      "Bash(source .venv/Scripts/activate)",
+      "Bash(timeout 300 python original_implementation/validate.py)",
+      "Bash(source ../../.venv/Scripts/activate)",
+      "Bash(timeout 600 python test_qwen_simple.py)",
+      "Bash(timeout 120 python evaluate_model.py --model microsoft/phi-2 --bits 3 --contexts 2048)",
+      "Bash(source ../.venv/Scripts/activate)",
+      "Bash(timeout 1800 python validate.py --model Qwen/Qwen2.5-3B-Instruct)",
+      "Bash(timeout 1800 python validate.py --model microsoft/phi-2)",
+      "Bash(timeout 1800 python validate.py --model meta-llama/Llama-2-7b-hf)",
+      "Bash(timeout 1800 python validate.py --model mistralai/Mistral-7B-Instruct-v0.1)"
+    ]
+  }
+}
