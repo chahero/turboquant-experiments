@@ -5,8 +5,10 @@
 **TurboQuant**는 LLM의 키-값 캐시를 압축하는 거의 최적의 벡터 양자화 알고리즘에 대한 포괄적인 평가입니다.
 
 이 리포지토리는 [원본 구현](https://github.com/tonbistudio/turboquant-pytorch)을 다음과 같이 확장합니다:
+- ✅ **인터랙티브 CLI 도구** - 실제 KV 캐시 압축 분석과 함께 실시간 모델 비교
+- ✅ **Streamlit 웹 UI** - 원본 vs TurboQuant 모델의 생성 결과를 나란히 비교
 - ✅ 다중 모델 평가 (Qwen, Phi, Mistral)
-- ✅ 포괄적인 성능 벤치마킹
+- ✅ 포괄적인 성능 벤치마킹 (생성 속도, 메모리, 주의력 정확도)
 - ✅ 상세한 실험 결과 및 분석
 - ✅ 재현 가능한 평가 프레임워크
 
@@ -15,10 +17,57 @@
 ### 설치
 
 ```bash
-pip install torch transformers bitsandbytes accelerate scipy sentencepiece tiktoken protobuf
+# 모든 의존성 설치
+pip install -r requirements.txt
 ```
 
-### Linux/Mac
+### CLI로 시도 (권장 - 빠른 테스트)
+
+**프롬프트를 입력해서 실제 KV 캐시 압축을 분석하는 인터랙티브 세션:**
+
+```bash
+cd experiments/2_multi_model_evaluation
+python interactive_with_real_kv.py --model "Qwen/Qwen2.5-3B-Instruct" --bits 3
+```
+
+프롬프트 입력:
+```
+[PROMPT] Enter text: 인공지능이란 무엇인가?
+[PROMPT] Enter text: 머신러닝 설명해줘
+[PROMPT] Enter text: quit
+```
+
+결과:
+- 생성된 텍스트
+- **실제 KV 캐시 압축 분석** (메모리 절감, 속도)
+- 주의력 정확도 메트릭 (코사인 유사도, top-1/top-5 일치율)
+
+### Streamlit 웹 UI로 시도 (사용자 친화적)
+
+**원본 vs TurboQuant 모델의 생성 결과를 나란히 비교할 수 있는 웹 인터페이스:**
+
+```bash
+cd streamlit_app
+streamlit run app.py
+```
+
+브라우저에서 `http://localhost:8501` 열기
+
+**기능:**
+- 💬 **나란한 텍스트 생성**: 원본 KV vs TurboQuant 출력
+- ⚡ **실시간 메트릭**: KV 캐시 크기, 압축률, 생성 시간
+- 🎯 **주의력 품질**: 코사인 유사도, top-1/top-5 일치율
+- 📊 **생성 영향 분석**: 압축으로 인해 주의력이 변하는 헤드의 비율
+- 🔧 **모델 선택**: Qwen, Phi, Mistral 중 선택
+- ⚙️ **양자화 제어**: 2-bit, 3-bit, 4-bit 압축 테스트
+
+**스크린샷:**
+
+![Streamlit 비교](docs/charts/streamlit_comparison.png)
+
+### 전체 벤치마크 실행
+
+#### Linux/Mac
 
 ```bash
 # 종합 테스트 실행 (GPU 필수)
@@ -26,17 +75,12 @@ cd experiments/2_multi_model_evaluation
 ./run_all_models_complete.sh
 ```
 
-### Windows (PowerShell/CMD)
+#### Windows (PowerShell/CMD)
 
 ```bash
-# 실험 디렉토리로 이동
-cd experiments/2_multi_model_evaluation
-
 # 모든 모델 한번에 평가
+cd experiments/2_multi_model_evaluation
 .\run_all_models_complete.bat
-
-# 또는 개별 모델 평가
-.\run_qwen.bat          # Qwen2.5-3B-Instruct 평가
 ```
 
 ## 핵심 결과 (3-bit 양자화 @ 8K 컨텍스트)

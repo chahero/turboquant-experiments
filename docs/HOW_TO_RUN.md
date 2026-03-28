@@ -14,15 +14,12 @@ This guide explains how to run the TurboQuant evaluation experiments.
 ```bash
 # Clone the repository
 git clone <repository-url>
-cd turboquant-experiments
+cd turboquant
 
-# Install dependencies
-pip install -r original_implementation/requirements.txt
+# Install all dependencies (unified requirements.txt)
+pip install -r requirements.txt
 
-# Install additional evaluation dependencies
-pip install transformers bitsandbytes accelerate
-
-# For CUDA support
+# Optional: Ensure CUDA support (if needed)
 pip install torch --index-url https://download.pytorch.org/whl/cu126
 ```
 
@@ -80,6 +77,32 @@ Attention Accuracy:
   Top-1 match: 77.8%
   Top-5 match: 93.1%
 ```
+
+## Streamlit Web UI
+
+**NEW: User-friendly web interface for side-by-side comparison!**
+
+```bash
+cd streamlit_app
+streamlit run app.py
+```
+
+Open `http://localhost:8501` in your browser.
+
+**Features:**
+- 💬 Side-by-side original vs TurboQuant text generation
+- ⚡ Real-time KV cache metrics and compression analysis
+- 🎯 Attention quality metrics (cosine similarity, top-1/top-5 match)
+- 📊 Generation impact analysis (% of attention heads that may differ)
+- 🔧 Model selection (Qwen, Phi, Mistral)
+- ⚙️ Quantization control (2-bit, 3-bit, 4-bit)
+
+**Example workflow:**
+1. Select a model (e.g., Qwen2.5-3B)
+2. Choose quantization bits (e.g., 3-bit)
+3. Enter a prompt
+4. Click "Compare"
+5. View original vs compressed outputs side-by-side with metrics
 
 ---
 

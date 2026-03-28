@@ -196,7 +196,7 @@ python evaluate_model.py \
 
 ## New Tools (Recent Additions)
 
-### Interactive Real KV Compression Analysis
+### Interactive Real KV Compression Analysis (CLI)
 
 The new `interactive_with_real_kv.py` tool addresses several limitations:
 
@@ -209,6 +209,29 @@ The new `interactive_with_real_kv.py` tool addresses several limitations:
 - Original limitations: "only evaluates one token's attention"
 - New tool: Analyzes actual KV cache at each generation step
 
+### Streamlit Web UI (NEW)
+
+Interactive web interface for side-by-side comparison:
+
+1. **Dual Generation**: Generates text with both original and compressed KV
+   - Same seed for deterministic output
+   - Shows actual output differences due to compression
+2. **Attention Analysis**: Displays how many heads might pick different tokens
+   - "Heads at Risk" metric: % of heads where compressed and original differ
+   - Indicates likelihood of different generation path
+3. **Visual Metrics**:
+   - Side-by-side text comparison
+   - KV cache memory metrics
+   - Compression ratio and speed
+   - Attention quality (cosine similarity, top-1/top-5 match)
+4. **Model/Bitwidth Selection**: Easy testing across different models and quantization levels
+
+**Features:**
+- User-friendly web interface
+- No command-line knowledge needed
+- Real-time analysis and results
+- Model and quantization selection via dropdown
+
 ### Generation Benchmark
 
 The `benchmark_generation.py` tool simulates real generation:
@@ -218,17 +241,28 @@ The `benchmark_generation.py` tool simulates real generation:
 
 ## Limitations (Current)
 
-1. **Custom Compression in Generation**: Interactive tool doesn't apply compression *during* generation (generates normally, then analyzes compression)
+1. **Custom Compression in Generation** (CLI tool): Interactive tool doesn't apply compression *during* generation (generates normally, then analyzes compression)
+   - **CLI limitation**: Analyzes compression impact on attention scores post-hoc
+   - **Streamlit solution**: Generates with deterministic seed to show actual output differences
    - **Workaround**: `benchmark_generation.py` simulates compression impact on memory
-2. **Fixed Seeds**: Seeds fixed for reproducibility, may not represent all cases
-3. **Long Context**: Limited to 8K tokens due to GPU memory
-4. **Different Hardware**: Results depend on GPU (VRAM, compute capability)
+
+2. **Streamlit Web UI Limitations**:
+   - Single prompt test per run (not interactive loop like CLI)
+   - Requires seed-based reproducibility (limited variance analysis)
+   - Long prompts (2K+ tokens) significantly increase generation time
+
+3. **General Limitations**:
+   - Long Context: Limited to 8K tokens in single forward pass due to GPU memory
+   - Different Hardware: Results depend on GPU (VRAM, compute capability)
+   - Fixed Codebooks: Seed-fixed for reproducibility, may not represent variance across different random seeds
 
 ## Future Improvements
 
-- Full generative sampling with compression applied during generation
-- Multiple random seeds to estimate variance
-- Longer contexts (16K+) with different quantization strategies
-- Direct inference latency benchmarking with compression
-- Comparison with other compression methods (KIVI, PolarQuant)
-- Batch generation comparison
+- **Full Generative Sampling**: Apply compression during generation loop (not post-hoc analysis)
+- **Variance Analysis**: Multiple random seeds to estimate output variance and stability
+- **Longer Contexts**: Support 16K+ tokens with efficient quantization strategies
+- **Latency Benchmarking**: Direct inference speed comparison with compression overhead
+- **Method Comparison**: Compare with other compression methods (KIVI, PolarQuant, etc.)
+- **Batch Generation**: Test batch inference with compression
+- **Deployment Options**: Streamlit Cloud, HuggingFace Spaces, Docker containers
+- **Interactive Sessions**: Extended multi-turn conversation analysis in Streamlit
