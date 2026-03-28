@@ -42,6 +42,86 @@ This tests:
 - Needle-in-haystack retrieval
 - GPU performance (if CUDA available)
 
+## Interactive Comparison Tool
+
+**NEW: Real-time comparison with actual KV cache compression!**
+
+```bash
+cd experiments/2_multi_model_evaluation
+
+# Start interactive session
+python interactive_with_real_kv.py \
+    --model Qwen/Qwen2.5-3B-Instruct \
+    --bits 3 \
+    --max-tokens 100
+```
+
+Then enter prompts interactively:
+```
+[PROMPT] Enter text: What is artificial intelligence?
+```
+
+This shows:
+- Generated text
+- **Real KV cache compression analysis**
+- Attention accuracy (cosine similarity, top-1/top-5 match)
+- Memory savings percentage
+
+**Example output:**
+```
+Memory Impact:
+  Original KV cache: 4.0 MB
+  Compressed KV cache: 1.3 MB
+  Compression ratio: 2.9x
+  Memory savings: 65.6%
+
+Attention Accuracy:
+  Cosine similarity: 99.8% (nearly identical)
+  Top-1 match: 77.8%
+  Top-5 match: 93.1%
+```
+
+---
+
+## Benchmarking
+
+### Generation Performance Benchmark
+
+Compare original vs TurboQuant across entire generation:
+
+```bash
+cd experiments/2_multi_model_evaluation
+
+python benchmark_generation.py \
+    --model Qwen/Qwen2.5-3B-Instruct \
+    --prompt "Explain quantum computing" \
+    --bits 3 \
+    --gen-tokens 100
+```
+
+Output includes:
+- **Memory**: KV cache size growth over generation
+- **Speed**: Tokens/second
+- **Compression overhead**: Time cost of compression
+
+### Attention Accuracy Benchmark
+
+Analyze compression impact on attention mechanism:
+
+```bash
+python benchmark_turboquant.py \
+    --model Qwen/Qwen2.5-3B-Instruct \
+    --prompt "Your prompt here" \
+    --bits 3
+```
+
+Measures:
+- Cosine similarity of attention scores
+- Top-1 token match rate
+- Top-5 token match rate
+
+---
+
 ## Running Model Evaluations
 
 ### Single Model Test

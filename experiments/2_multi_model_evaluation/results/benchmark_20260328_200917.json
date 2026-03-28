@@ -1,0 +1,22 @@
+{
+  "timestamp": "2026-03-28T20:09:17.116595",
+  "model": "Qwen/Qwen2.5-3B-Instruct",
+  "bits": 3,
+  "prompt": "The quick brown fox jumps over the lazy dog. This is a test sentence. Artificial intelligence is transforming the world. Machine learning models are becoming more powerful. The future of AI is exciting. We need to understand how neural networks work. Deep learning has revolutionized many fields. Computer vision is now very accurate. Natural language processing enables better communication. Transformers have changed how we process text. The attention mechanism is crucial for modern NLP. Knowledge graphs help organize information. Embeddings represent words as vectors. Language models can generate coherent text. Prompt engineering is becoming an important skill.",
+  "memory": {
+    "original_kv_mb": 4.04296875,
+    "compressed_kv_mb": 4.074554443359375,
+    "compression_ratio": 0.9922480620155039,
+    "memory_savings_pct": -0.78125
+  },
+  "speed": {
+    "forward_time_s": 0.4016597270965576,
+    "compression_time_s": 3.090418577194214,
+    "total_time_s": 3.4920783042907715
+  },
+  "quality": {
+    "cosine_similarity": 0.9980003088712692,
+    "top1_match_pct": 77.77777777777777,
+    "top5_match_pct": 93.05555555555556
+  }
+}

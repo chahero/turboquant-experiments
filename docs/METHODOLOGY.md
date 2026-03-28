@@ -71,14 +71,27 @@ pct = 100 × matches / n_heads
    - Verifies theoretical bounds
    - No model involved
 
-2. **Single Forward Pass** (`experiments/2_multi_model_evaluation/`)
+2. **Interactive Comparison** (`experiments/2_multi_model_evaluation/interactive_with_real_kv.py`)
+   - Real-time prompt-based testing
+   - User enters custom prompts
+   - Shows actual KV cache compression analysis
+   - Measures memory, speed, and attention accuracy
+   - No pre-built contexts needed
+
+3. **Single Forward Pass** (`experiments/2_multi_model_evaluation/`)
    - Load pre-trained model
    - One forward pass on long context
    - Capture full KV cache
    - Compress with TurboQuant
    - Compare attention scores
 
-3. **Variable Context Lengths**
+4. **Generation Benchmark** (`experiments/2_multi_model_evaluation/benchmark_generation.py`)
+   - Simulate full generation loop
+   - Track KV cache growth across tokens
+   - Measure actual memory savings during generation
+   - Compare speed with/without compression
+
+5. **Variable Context Lengths**
    - 2K, 4K, 8K tokens
    - Tests compression stability across lengths
    - Reveals any context-dependent effects
@@ -181,18 +194,41 @@ python evaluate_model.py \
     --output qwen/results_3bit.json
 ```
 
-## Limitations
+## New Tools (Recent Additions)
 
-1. **Single Forward Pass**: Only evaluates one token's attention, not full generation
+### Interactive Real KV Compression Analysis
+
+The new `interactive_with_real_kv.py` tool addresses several limitations:
+
+1. **Real KV Cache Compression**: Actually compresses KV cache and analyzes impact
+2. **Custom Prompts**: Users can test any prompt, not just pre-built contexts
+3. **Real-time Feedback**: Immediate compression metrics (memory, speed, accuracy)
+4. **Actual Generation**: Not just single forward pass - can analyze full sequences
+
+**Example Improvements**:
+- Original limitations: "only evaluates one token's attention"
+- New tool: Analyzes actual KV cache at each generation step
+
+### Generation Benchmark
+
+The `benchmark_generation.py` tool simulates real generation:
+- Tracks KV cache growth during generation
+- Measures memory savings across full sequence
+- Shows compression overhead in generation loop
+
+## Limitations (Current)
+
+1. **Custom Compression in Generation**: Interactive tool doesn't apply compression *during* generation (generates normally, then analyzes compression)
+   - **Workaround**: `benchmark_generation.py` simulates compression impact on memory
 2. **Fixed Seeds**: Seeds fixed for reproducibility, may not represent all cases
 3. **Long Context**: Limited to 8K tokens due to GPU memory
-4. **Inference Latency**: Script measures compression, not end-to-end inference speedup
-5. **Different Hardware**: Results depend on GPU (VRAM, compute capability)
+4. **Different Hardware**: Results depend on GPU (VRAM, compute capability)
 
 ## Future Improvements
 
-- Full generative sampling (encode all tokens, measure quality)
+- Full generative sampling with compression applied during generation
 - Multiple random seeds to estimate variance
 - Longer contexts (16K+) with different quantization strategies
-- Inference latency benchmarking
+- Direct inference latency benchmarking with compression
 - Comparison with other compression methods (KIVI, PolarQuant)
+- Batch generation comparison

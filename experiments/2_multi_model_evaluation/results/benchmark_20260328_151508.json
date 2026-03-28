@@ -1,0 +1,22 @@
+{
+  "timestamp": "2026-03-28T15:15:08.786729",
+  "model": "Qwen/Qwen2.5-3B-Instruct",
+  "bits": 3,
+  "prompt": "What is artificial intelligence?",
+  "memory": {
+    "original_kv_mb": 0.17578125,
+    "compressed_kv_mb": 0.177154541015625,
+    "compression_ratio": 0.9922480620155039,
+    "memory_savings_pct": -0.78125
+  },
+  "speed": {
+    "forward_time_s": 0.3908352851867676,
+    "compression_time_s": 2.545038938522339,
+    "total_time_s": 2.9358742237091064
+  },
+  "quality": {
+    "cosine_similarity": 0.9991591026385626,
+    "top1_match_pct": 93.05555555555556,
+    "top5_match_pct": 100.0
+  }
+}

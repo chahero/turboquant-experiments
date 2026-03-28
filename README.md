@@ -5,10 +5,11 @@
 Comprehensive evaluation of **TurboQuant**, a near-optimal vector quantization algorithm for compressing LLM key-value caches.
 
 This repository extends the [original implementation](https://github.com/tonbistudio/turboquant-pytorch) with:
+- ✅ **Interactive CLI tool** for real-time model comparison with actual KV cache compression analysis
 - ✅ Multi-model evaluation (Qwen, LLaMA, Phi, Mistral)
-- ✅ Comprehensive performance benchmarking
+- ✅ Comprehensive performance benchmarking (generation speed, memory, attention accuracy)
 - ✅ Detailed experimental results and analysis
-- ✅ Reproducible evaluation framework
+- ✅ Reproducible evaluation framework with actual KV compression analysis
 
 ## Quick Start
 
@@ -18,7 +19,30 @@ This repository extends the [original implementation](https://github.com/tonbist
 pip install torch transformers bitsandbytes accelerate scipy sentencepiece tiktoken protobuf
 ```
 
-### Linux/Mac
+### Try Interactive Comparison (Recommended for Quick Testing)
+
+**Start an interactive session where you can enter prompts and see real KV cache compression:**
+
+```bash
+cd experiments/2_multi_model_evaluation
+python interactive_with_real_kv.py --model "Qwen/Qwen2.5-3B-Instruct" --bits 3
+```
+
+Then enter prompts:
+```
+[PROMPT] Enter text: What is artificial intelligence?
+[PROMPT] Enter text: Explain machine learning
+[PROMPT] Enter text: quit
+```
+
+You'll see:
+- Generated text
+- **Real KV cache compression analysis** (memory savings, speed)
+- Attention accuracy metrics (cosine similarity, top-1/top-5 match)
+
+### Run Full Benchmarks
+
+#### Linux/Mac
 
 ```bash
 # Run synthetic tests (no GPU needed)
@@ -30,7 +54,7 @@ cd experiments/2_multi_model_evaluation
 ./run_all_models_complete.sh
 ```
 
-### Windows (PowerShell/CMD)
+#### Windows (PowerShell/CMD)
 
 ```bash
 # Navigate to experiments
@@ -38,9 +62,6 @@ cd experiments/2_multi_model_evaluation
 
 # Run all models at once
 .\run_all_models_complete.bat
-
-# Or run individual models
-.\run_qwen.bat          # Qwen2.5-3B-Instruct
 ```
 
 ## Key Results (3-bit Quantization @ 8K Context)
@@ -89,10 +110,15 @@ turboquant-experiments/
 │   │   └── Verify MSE bounds, inner product unbiasedness
 │   │
 │   ├── 2_multi_model_evaluation/         # Evaluate different models
+│   │   ├── interactive_with_real_kv.py   # ⭐ Interactive CLI tool (RECOMMENDED)
+│   │   ├── benchmark_generation.py       # Generation performance benchmark
+│   │   ├── benchmark_turboquant.py       # Attention accuracy benchmark
+│   │   ├── simple_prompt_test.py         # Basic comparison test
 │   │   ├── evaluate_model.py             # Generic evaluation framework
 │   │   ├── analyze_results.py            # Result analysis & plots
-│   │   ├── run_*.sh                      # Model-specific scripts
-│   │   └── {qwen,llama,phi}/             # Results per model
+│   │   ├── run_all_models_complete.sh    # Batch evaluation script
+│   │   ├── run_all_models_complete.bat   # Windows batch script
+│   │   └── results/                      # Benchmark results (JSON)
 │   │
 │   └── 3_performance_analysis/           # Speed & memory benchmarks
 │       ├── benchmark_speed.py

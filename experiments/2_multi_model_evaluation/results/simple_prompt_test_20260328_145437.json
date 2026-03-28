@@ -1,0 +1,39 @@
+{
+  "timestamp": "2026-03-28T14:54:37.678032",
+  "model": "Qwen/Qwen2.5-3B-Instruct",
+  "prompt": "What is artificial intelligence?",
+  "runs": [
+    {
+      "run": 1,
+      "seed": 42,
+      "text": " Artificial intelligence (AI) is a branch of computer science that aims to create intelligent agents that can learn, reason, and adapt to changing environments. AI systems are designed to perform tasks that would typically require human intelligence, such as speech recognition, image recognition, decision-making, and natural language processing.\n\nAI can be broadly categorized into two types: narrow (or weak) AI, which is specialized for a specific task, and general (or strong) AI, which has the ability",
+      "tokens_count": 100
+    },
+    {
+      "run": 2,
+      "seed": 42,
+      "text": " Artificial intelligence (AI) is a branch of computer science that aims to create intelligent agents that can learn, reason, and adapt to changing environments. AI systems are designed to perform tasks that would typically require human intelligence, such as speech recognition, image recognition, decision-making, and natural language processing.\n\nAI can be broadly categorized into two types: narrow (or weak) AI, which is specialized for a specific task, and general (or strong) AI, which has the ability",
+      "tokens_count": 100
+    },
+    {
+      "run": 3,
+      "seed": null,
+      "text": " Artificial Intelligence (AI) is a branch of computer science that focuses on creating intelligent machines that can think, learn, and perform tasks similar to human beings. AI uses algorithms and machine learning techniques to analyze large amounts of data and make predictions or decisions without being explicitly programmed.\n\nThere are different types of AI, including:\n\n1. Narrow (or Weak) AI: Limited to a specific task and not general-purpose.\n2. General AI: Capable of performing any intellectual task that",
+      "tokens_count": 100
+    }
+  ],
+  "comparisons": {
+    "run1_vs_run2": {
+      "exact_match": 1.0,
+      "jaccard_similarity": 1.0,
+      "bleu_like": 1.0,
+      "char_similarity": 1.0
+    },
+    "run1_vs_run3": {
+      "exact_match": 0.0,
+      "jaccard_similarity": 0.25742574257425743,
+      "bleu_like": 0.47435897435897434,
+      "char_similarity": 0.7674418604651163
+    }
+  }
+}
