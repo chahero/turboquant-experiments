@@ -1,0 +1,23 @@
+# TurboQuant Project - All Dependencies
+# Install with: pip install -r requirements.txt
+
+# Core ML
+torch>=2.0.0
+torchvision>=0.15.0
+transformers>=4.40.0
+accelerate>=0.25.0
+bitsandbytes>=0.43.0
+scipy>=1.10.0
+
+# Data & Analysis
+numpy>=1.24.0
+pandas>=2.0.0
+matplotlib>=3.7.0
+
+# Web UI (Streamlit)
+streamlit>=1.28.0
+
+# Optional: Additional utilities
+sentencepiece>=0.1.99
+tiktoken>=0.5.0
+protobuf>=3.20.0

@@ -16,7 +16,8 @@ This repository extends the [original implementation](https://github.com/tonbist
 ### Installation
 
 ```bash
-pip install torch transformers bitsandbytes accelerate scipy sentencepiece tiktoken protobuf
+# Install all dependencies
+pip install -r requirements.txt
 ```
 
 ### Try Interactive Comparison (Recommended for Quick Testing)
@@ -39,6 +40,34 @@ You'll see:
 - Generated text
 - **Real KV cache compression analysis** (memory savings, speed)
 - Attention accuracy metrics (cosine similarity, top-1/top-5 match)
+
+### Try Streamlit Web UI (Easy-to-use Interface)
+
+**Interactive web interface for side-by-side original vs TurboQuant comparison:**
+
+```bash
+cd streamlit_app
+streamlit run app.py
+```
+
+Open browser at `http://localhost:8501`
+
+**Features:**
+- 💬 **Side-by-side text generation**: Original KV vs TurboQuant output
+- ⚡ **Real-time metrics**: KV cache size, compression ratio, generation time
+- 🎯 **Attention quality**: Cosine similarity, top-1/top-5 match percentages
+- 📊 **Generation impact analysis**: How many attention heads change due to compression
+- 🔧 **Model selection**: Choose from Qwen, Phi, Mistral
+- ⚙️ **Quantization control**: Test 2-bit, 3-bit, 4-bit compression
+
+**Requirements:**
+- Python 3.10+
+- PyTorch 2.0+ with CUDA
+- 12GB+ GPU VRAM
+
+**Example:**
+
+![Streamlit Comparison](docs/charts/streamlit_comparison.png)
 
 ### Run Full Benchmarks
 
@@ -298,20 +327,23 @@ This repository includes improvements over the original:
 
 ## Dependencies
 
+All dependencies are listed in `requirements.txt`:
+
 ```
-torch>=2.0
-transformers>=4.35
-bitsandbytes>=0.41
-accelerate>=0.20
-scipy>=1.10
-matplotlib>=3.7
-pandas>=2.0
+torch>=2.0          # PyTorch with CUDA support
+transformers>=4.40  # Hugging Face transformers
+accelerate>=0.25    # Distributed training utilities
+bitsandbytes>=0.43  # Quantization library
+scipy>=1.10         # Scientific computing
+matplotlib>=3.7     # Plotting
+pandas>=2.0         # Data analysis
+numpy>=1.24         # Numerical computing
+streamlit>=1.28     # Web UI framework
 ```
 
-Install all:
+Install all dependencies:
 ```bash
-pip install -r original_implementation/requirements.txt
-pip install transformers bitsandbytes accelerate scipy matplotlib pandas
+pip install -r requirements.txt
 ```
 
 ## Citation
